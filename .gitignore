@@ -1,1 +1,5 @@
+# Author info is user specific so ignore the values set here
 /git/author
+
+# iTerm2 adds this symlink automatically
+/iterm2/AppSupport
