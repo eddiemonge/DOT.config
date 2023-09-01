@@ -22,7 +22,9 @@ export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 ## Tell vim where it's config files are
-export VIM=$HOME/.config/vim
+export VIMDIR=$HOME/.config/vim
+VIMRC=$VIMDIR/vimrc
+export VIMINIT=":source $VIMRC"
 
 ## Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then

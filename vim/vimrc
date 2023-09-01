@@ -1,0 +1,56 @@
+" Forget being compatible with good ol' vi
+set nocompatible
+
+" Handle vim default and created files
+set nobackup " Turn off backup files
+set noswapfile " Turn off swap file
+set nowritebackup " Turn off backup file
+set viminfofile=$ZSH_CACHE_DIR/vim
+set runtimepath+=$VIMDIR
+set packpath+=$VIMDIR
+
+" Turn on filetype recognition with auto-indenting and plugins
+filetype plugin indent on
+
+" Turn on syntax highlighting
+syntax on
+
+" General property editing
+set autoindent " Copy indent from current line when starting a new line
+set autoread " Set to auto read when a file is changed from the outside
+set backspace=indent,eol,start " Intuitive backspacing in insert mode
+set hidden " Allow Vim to manage multiple buffers effectively
+set history=100 " Increase the search history
+set ignorecase " Ignore case in search patterns
+set incsearch " While typing a search command, show where the pattern matches, as it was typed
+set laststatus=2 " Always display the statusline in all windows
+set list " Show the characters defined in listchars
+set listchars=tab:▸·,trail:·,extends:»,precedes:«,conceal:▓,nbsp:␣
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+set number " Show line numbers
+set ruler " Show the line and column number of the cursor position, separated by a comma
+set scrolloff=1 " Make the page scroll before the cursor gets to the bottom of the page
+set showmatch " Show matching bracets when text indicator is over them
+set smartcase " Case sensitive search when there is a capital letter in the pattern
+set smartindent " Do smart autoindenting when starting a new line
+set visualbell " Use visual bell instead of beeping
+set wildmode=list:longest,full " Enable enhanced command-line completion.
+set wrap " Wrap long lines
+
+" Control tabs/spaces/column displays
+set expandtab " Expand tab to spaces
+set shiftwidth=2 " How many columns text is indented with the reindent operations (<< and >>). For modifying text
+set softtabstop=2 " Set softtabstop to control how many columns vim uses when you hit Tab in insert mode. If softtabstop is less than tabstop and expandtab is not set, vim will use a combination of tabs and spaces to make up the desired spacing. If softtabstop equals tabstop and expandtab is not set, vim will always use tabs. When expandtab is set, vim will always use the appropriate number of spaces
+set smarttab
+set tabstop=2 " How many columns a tab counts for. For displaying text
+
+" Highlight current line
+set cursorline
+autocmd InsertLeave * set nocursorline " only in insert mode
+autocmd InsertEnter * set cursorline " only in insert mode
+
+" Highlight unwanted spaces
+highlight SpecialKey ctermbg=red guibg=red guifg=yellow
+
+" Strip trailing spaces on save
+autocmd FileType javascript,css,scss,erb,haml,php,coffee,json autocmd BufWritePre <buffer> :%s/\s\+$//e

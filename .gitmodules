@@ -4,3 +4,9 @@
 [submodule "nvm"]
 	path = nvm
 	url = https://github.com/nvm-sh/nvm.git
+[submodule "vim/pack/plugins/start/commentary"]
+	path = vim/pack/plugins/start/commentary
+	url = https://tpope.io/vim/commentary.git
+[submodule "vim/pack/plugins/start/editorconfig-vim"]
+	path = vim/pack/plugins/start/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
