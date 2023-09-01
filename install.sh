@@ -62,6 +62,18 @@ fi
 #   sh "$HOME/.config/osx/macos.sh"
 # fi
 
+# Install powerline fonts
+if [ "$OS" = "Mac" ]; then
+  if [ ! -f "$HOME/Library/Fonts/Inconsolata-Regular.ttf" ]; then
+    echo "Installing Inconsolata ..."
+    curl -sSL -o "$HOME/Library/Fonts/Inconsolata-Regular.ttf" https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf
+  fi
+  if [ ! -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
+    echo "Installing Inconsolata for Powerline ..."
+    curl -sSL -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf" https://github.com/powerline/fonts/raw/master/Inconsolata/Inconsolata%20for%20Powerline.otf
+  fi
+fi
+
 # Cleanup
 echo "Cleaning up ..."
 brew cleanup
