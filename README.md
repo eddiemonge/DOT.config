@@ -3,7 +3,7 @@ My config files. These replace my DOT.files
 # Install
 Run this with the following command
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/eddiemonge/DOT.files/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/eddiemonge/DOT.config/HEAD/install.sh)"
 ```
 
 ## Git Commit Author
