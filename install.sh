@@ -109,5 +109,7 @@ sudo xcodebuild -license
 
 # Cleanup
 echo "Cleaning up ..."
+echo "Next, setup for ssh config:"
+echo 'ssh-keygen -t ed25519 -C "your_email@example.com"'
 brew cleanup
 echo "All done!"
