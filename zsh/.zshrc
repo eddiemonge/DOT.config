@@ -34,3 +34,6 @@ zstyle ':omz:update' mode auto
 plugins=(git nvm)
 
 source $ZSH/oh-my-zsh.sh
+
+# Load aliases and things after path
+source $ZSH/../aliases

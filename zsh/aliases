@@ -1,0 +1,24 @@
+# Only use these if in an interactive prompt
+case "$-" in *i*) ;; *) return ;; esac
+
+# Better ping
+# alias ping='prettyping --nolegend'
+
+# Better cat
+# alias c="bat"
+
+# Recursively delete `.DS_Store` files
+# alias removeds="find . -name '*.DS_Store' -type f -ls -delete"
+
+# Git
+# alias g="git"
+
+# Copy w/ progress
+# cp_p () {
+#   rsync -WavP --human-readable --progress $1 $2
+# }
+
+# List the contents of a directory after going into it
+# function cd {
+#   builtin cd "$@" && ls -Alh
+# }
