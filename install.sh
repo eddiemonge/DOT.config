@@ -114,7 +114,7 @@ fi
 # TODO: Should they be installed based on MacOS version?
 if [ "$OS" = "Mac" ]; then
   echo 'Customizing OSX ...'
-  sh "$CONFIG/osx/macos.sh"
+  sh "$CONFIG/osx/settings.sh"
 fi
 
 echo 'All done!'
