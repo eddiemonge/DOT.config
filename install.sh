@@ -26,12 +26,19 @@ if [ "$OS" = "Linux" ]; then
   sudo apt-get -y upgrade
   sudo apt-get -y install ack build-essential curl file git vim-nox wget zsh
   which zsh | sudo tee -a /etc/shells
+  chsh -s "$(which zsh)"
 fi
 
 # Install, or update, homebrew
 if [ ! "$(which brew)" ]; then
   echo 'Installing Homebrew ...'
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if [ "$OS" = "Mac" ]; then
+    tempd=$(mktemp -d)
+    curl -sSL -o "$tempd"/brew.pkg https://github.com/Homebrew/brew/releases/download/5.3.3/Homebrew-4.3.3.pkg "$tempd"/brew.pkg
+    sudo installer -pkg "$tempd"/brew.pkg -target /
+  else
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
   
   # Turn off brew analytics as most of the time this is a work machine
   brew analytics off
@@ -55,11 +62,11 @@ fi
 if [ "$OS" = "Mac" ]; then
   if [ ! -f "$HOME/Library/Fonts/Inconsolata-Regular.ttf" ]; then
     echo 'Installing Inconsolata ...'
-    /bin/bash -c "$(curl -sSL -o "$HOME/Library/Fonts/Inconsolata-Regular.ttf" https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf)"
+    curl -sSL -o "$HOME/Library/Fonts/Inconsolata-Regular.ttf" https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf
   fi
   if [ ! -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
     echo 'Installing Inconsolata for Powerline ...'
-    /bin/bash -c "$(curl -sSL -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf" https://github.com/powerline/fonts/raw/master/Inconsolata/Inconsolata%20for%20Powerline.otf)"
+    curl -sSL -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf" https://github.com/powerline/fonts/raw/master/Inconsolata/Inconsolata%20for%20Powerline.otf
   fi
 fi
 
@@ -81,15 +88,13 @@ else
   }
 fi
 
-# Switching to zsh shell now
-sudo chsh -s "$(which zsh)"
-
 # Set where zsh gets it's config file from
-if [ ! -z "$ZDOTDIR" ]; then
+if [ ! -f "$HOME/.zshenv" ]; then
   echo 'Setting up zsh env ...'
   ln -s "$CONFIG/zsh/zshenv" "$HOME/.zshenv"
-  . "$HOME/.zshenv"
 fi
+. "$HOME/.zshenv"
+
 
 # Source zsh files
 . "$CONFIG/zsh/.zshrc"
