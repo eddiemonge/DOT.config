@@ -9,6 +9,14 @@ esac
 
 CONFIG="$HOME/.config"
 
+
+# Ask for the administrator password upfront
+echo "Sudo password is needed later on. Asking now so installation can proceed unattended"
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Make sure we start in the home directory
 cd "$HOME" || exit 1
 
@@ -19,7 +27,6 @@ if [ "$OS" = "Linux" ]; then
   sudo apt-get -y upgrade
   sudo apt-get -y install ack build-essential curl file git vim-nox wget zsh
   which zsh | sudo tee -a /etc/shells
-  sudo chsh -s "$(which zsh)"
 fi
 
 # Install, or update, homebrew
@@ -45,6 +52,18 @@ else
 fi
 brew cleanup
 
+# Install powerline fonts
+if [ "$OS" = "Mac" ]; then
+  if [ ! -f "$HOME/Library/Fonts/Inconsolata-Regular.ttf" ]; then
+    echo 'Installing Inconsolata ...'
+    /bin/bash -c "$(curl -sSL -o "$HOME/Library/Fonts/Inconsolata-Regular.ttf" https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf)"
+  fi
+  if [ ! -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
+    echo 'Installing Inconsolata for Powerline ...'
+    /bin/bash -c "$(curl -sSL -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf" https://github.com/powerline/fonts/raw/master/Inconsolata/Inconsolata%20for%20Powerline.otf)"
+  fi
+fi
+
 # Clone, or update, the repo
 if [ ! -d "$CONFIG" ]; then
   echo 'Getting the config files from GitHub ...'
@@ -63,17 +82,8 @@ else
   }
 fi
 
-# Install powerline fonts
-if [ "$OS" = "Mac" ]; then
-  if [ ! -f "$HOME/Library/Fonts/Inconsolata-Regular.ttf" ]; then
-    echo 'Installing Inconsolata ...'
-    curl -sSL -o "$HOME/Library/Fonts/Inconsolata-Regular.ttf" https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf
-  fi
-  if [ ! -f "$HOME/Library/Fonts/Inconsolata for Powerline.otf" ]; then
-    echo 'Installing Inconsolata for Powerline ...'
-    curl -sSL -o "$HOME/Library/Fonts/Inconsolata for Powerline.otf" https://github.com/powerline/fonts/raw/master/Inconsolata/Inconsolata%20for%20Powerline.otf
-  fi
-fi
+# Switching to zsh shell now
+sudo chsh -s "$(which zsh)"
 
 # Set where zsh gets it's config file from
 if [ ! -z "$ZDOTDIR" ]; then
@@ -102,10 +112,6 @@ if [ "$OS" = "Mac" ]; then
   echo 'Customizing OSX ...'
   sh "$CONFIG/osx/macos.sh"
 fi
-
-# Install xcode since it is usually required for things
-xcode-select --install
-sudo xcodebuild -license
 
 echo 'All done!'
 echo 'Do not forget to configure ssh:'
