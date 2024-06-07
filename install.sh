@@ -9,7 +9,6 @@ esac
 
 CONFIG="$HOME/.config"
 
-
 # Ask for the administrator password upfront
 echo "Sudo password is needed later on. Asking now so installation can proceed unattended"
 sudo -v
@@ -32,7 +31,7 @@ fi
 # Install, or update, homebrew
 if [ ! "$(which brew)" ]; then
   echo 'Installing Homebrew ...'
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   
   # Turn off brew analytics as most of the time this is a work machine
   brew analytics off
@@ -45,12 +44,12 @@ if [ ! "$(which brew)" ]; then
     open -a "Google Chrome" "http://itunes.apple.com/app/id413857545"
   fi
   brew install bat prettyping
+  brew cleanup
 else
   echo 'Updating Homebrew ...'
   brew update
   brew upgrade
 fi
-brew cleanup
 
 # Install powerline fonts
 if [ "$OS" = "Mac" ]; then
