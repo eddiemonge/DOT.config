@@ -3,3 +3,7 @@
 
 # iTerm2 adds this symlink automatically
 /iterm2/AppSupport
+
+# zsh tmp files
+/zsh/.zsh_sessions
+/zsh/.zcompdump*
